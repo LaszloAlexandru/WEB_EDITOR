@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5f3913dd-73b3-41ae-b6a6-b289a5eedf10" name="Default Changelist" comment="fixup! Initial Commit" />
+    <list id="4c519e40-5e0f-4001-aefd-46859ccaa5a6" name="Revert &quot;initial commit&quot;" comment="Revert &quot;initial commit&quot;&#10;&#10;This reverts commit ba3b04be" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="ProjectId" id="1Y7nzwcDuIKeXuPcJPRaBYcit2X" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f3913dd-73b3-41ae-b6a6-b289a5eedf10" name="Default Changelist" comment="" />
+      <created>1582302765646</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582302765646</updated>
+      <workItem from="1582302771220" duration="1429000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1043" y="-1230" key="CommitChangelistDialog2" timestamp="1582304059952">
+      <screen x="-1096" y="-1417" width="3440" height="1367" />
+    </state>
+    <state x="1043" y="-1230" key="CommitChangelistDialog2/0.23.1440.877/-3016.-1289.1920.1177/-1096.-1417.3440.1367@-1096.-1417.3440.1367" timestamp="1582304059952" />
+    <state x="1154" y="-1038" key="MultipleFileMergeDialog" timestamp="1582303756545">
+      <screen x="-1096" y="-1417" width="3440" height="1367" />
+    </state>
+    <state x="1154" y="-1038" key="MultipleFileMergeDialog/0.23.1440.877/-3016.-1289.1920.1177/-1096.-1417.3440.1367@-1096.-1417.3440.1367" timestamp="1582303756545" />
+    <state x="-1045" y="-1380" width="1600" height="1157" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog" timestamp="1582304518484">
+      <screen x="-1096" y="-1417" width="3440" height="1417" />
+    </state>
+    <state x="-1045" y="-1380" width="1600" height="1157" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.23.1440.827/-3016.-1289.1920.1177/-1096.-1417.3440.1417@-1096.-1417.3440.1417" timestamp="1582304518484" />
+    <state x="644" y="-1317" width="1600" height="1116" key="com.intellij.history.integration.ui.views.DirectoryHistoryDialog/0.23.1440.877/-3016.-1289.1920.1177/-1096.-1417.3440.1367@-1096.-1417.3440.1367" timestamp="1582304074086" />
+    <state x="644" y="-1317" width="1600" height="1116" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1582304404064">
+      <screen x="-1096" y="-1417" width="3440" height="1417" />
+    </state>
+    <state x="644" y="-1317" width="1600" height="1116" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.23.1440.827/-3016.-1289.1920.1177/-1096.-1417.3440.1417@-1096.-1417.3440.1417" timestamp="1582304404064" />
+  </component>
+</project>

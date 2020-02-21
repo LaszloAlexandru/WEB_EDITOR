@@ -1,8 +1,175 @@
 {
   "version": 1,
-  "projects": {},
+  "projects": {
+    "web-editor-client": {
+      "root": "apps/web-editor-client",
+      "sourceRoot": "apps/web-editor-client/src",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "options": {
+            "outputPath": "dist/apps/web-editor-client",
+            "index": "apps/web-editor-client/src/index.html",
+            "main": "apps/web-editor-client/src/main.tsx",
+            "polyfills": "apps/web-editor-client/src/polyfills.ts",
+            "tsConfig": "apps/web-editor-client/tsconfig.app.json",
+            "assets": [
+              "apps/web-editor-client/src/favicon.ico",
+              "apps/web-editor-client/src/assets"
+            ],
+            "styles": ["apps/web-editor-client/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-editor-client/src/environments/environment.ts",
+                  "with": "apps/web-editor-client/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "web-editor-client:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "web-editor-client:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/web-editor-client/.eslintrc",
+            "tsConfig": [
+              "apps/web-editor-client/tsconfig.app.json",
+              "apps/web-editor-client/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-editor-client/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-editor-client/jest.config.js",
+            "tsConfig": "apps/web-editor-client/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-editor-client-e2e": {
+      "root": "apps/web-editor-client-e2e",
+      "sourceRoot": "apps/web-editor-client-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-editor-client-e2e/cypress.json",
+            "tsConfig": "apps/web-editor-client-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-editor-client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-editor-client:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/web-editor-client-e2e/.eslintrc",
+            "tsConfig": ["apps/web-editor-client-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-editor-client-e2e/**"]
+          }
+        }
+      }
+    },
+    "web-editor-server": {
+      "root": "apps/web-editor-server",
+      "sourceRoot": "apps/web-editor-server/src",
+      "projectType": "application",
+      "prefix": "web-editor-server",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/apps/web-editor-server",
+            "main": "apps/web-editor-server/src/main.ts",
+            "tsConfig": "apps/web-editor-server/tsconfig.app.json",
+            "assets": ["apps/web-editor-server/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-editor-server/src/environments/environment.ts",
+                  "with": "apps/web-editor-server/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "web-editor-server:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/web-editor-server/.eslintrc",
+            "tsConfig": [
+              "apps/web-editor-server/tsconfig.app.json",
+              "apps/web-editor-server/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-editor-server/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-editor-server/jest.config.js",
+            "tsConfig": "apps/web-editor-server/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
+    "defaultCollection": "@nrwl/react"
   },
   "schematics": {
     "@nrwl/workspace": {
@@ -17,9 +184,15 @@
     },
     "@nrwl/react": {
       "application": {
-        "linter": "eslint"
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
       },
       "library": {
+        "style": "scss",
         "linter": "eslint"
       }
     },
@@ -56,5 +229,6 @@
         "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "web-editor-client"
 }

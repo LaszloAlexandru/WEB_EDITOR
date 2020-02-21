@@ -10,5 +10,16 @@
     "tslint.json": "*",
     "nx.json": "*"
   },
-  "projects": {}
+  "projects": {
+    "web-editor-client": {
+      "tags": []
+    },
+    "web-editor-client-e2e": {
+      "tags": [],
+      "implicitDependencies": ["web-editor-client"]
+    },
+    "web-editor-server": {
+      "tags": []
+    }
+  }
 }
