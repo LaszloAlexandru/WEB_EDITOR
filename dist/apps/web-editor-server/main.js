@@ -210,6 +210,7 @@ __webpack_require__.r(__webpack_exports__);
  * This is only a minimal backend to get started.
  */
 
+// @ts-ignore
 
 
 function bootstrap() {
