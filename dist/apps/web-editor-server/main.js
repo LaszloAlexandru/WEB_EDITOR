@@ -142,8 +142,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _app_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.controller */ "./apps/web-editor-server/src/app/app.controller.ts");
-/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.service */ "./apps/web-editor-server/src/app/app.service.ts");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/mongoose */ "@nestjs/mongoose");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _app_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.controller */ "./apps/web-editor-server/src/app/app.controller.ts");
+/* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.service */ "./apps/web-editor-server/src/app/app.service.ts");
+/* harmony import */ var _libs_server_auth_src__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../libs/server-auth/src */ "./libs/server-auth/src/index.ts");
+
+
 
 
 
@@ -152,9 +157,12 @@ let AppModule = class AppModule {
 };
 AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
-        imports: [],
-        controllers: [_app_controller__WEBPACK_IMPORTED_MODULE_2__["AppController"]],
-        providers: [_app_service__WEBPACK_IMPORTED_MODULE_3__["AppService"]]
+        imports: [
+            _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__["MongooseModule"].forRoot('mongodb+srv://TestUser:NSLKDrhDjOmtEKeY@web-editor-mp3gm.mongodb.net/Web-Editor?retryWrites=true&w=majority'),
+            _libs_server_auth_src__WEBPACK_IMPORTED_MODULE_5__["ServerAuthModule"]
+        ],
+        controllers: [_app_controller__WEBPACK_IMPORTED_MODULE_3__["AppController"]],
+        providers: [_app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"]]
     })
 ], AppModule);
 
@@ -215,7 +223,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function bootstrap() {
     return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-        const app = yield _nestjs_core__WEBPACK_IMPORTED_MODULE_1__["NestFactory"].create(_app_app_module__WEBPACK_IMPORTED_MODULE_2__["AppModule"]);
+        const app = yield _nestjs_core__WEBPACK_IMPORTED_MODULE_1__["NestFactory"].create(_app_app_module__WEBPACK_IMPORTED_MODULE_2__["AppModule"], { cors: true });
         const globalPrefix = 'api';
         app.setGlobalPrefix(globalPrefix);
         const port = process.env.port || 3333;
@@ -225,6 +233,222 @@ function bootstrap() {
     });
 }
 bootstrap();
+
+
+/***/ }),
+
+/***/ "./libs/server-auth/src/index.ts":
+/*!***************************************!*\
+  !*** ./libs/server-auth/src/index.ts ***!
+  \***************************************/
+/*! exports provided: ServerAuthModule, ServerAuthService, ServerAuthController */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _lib_server_auth_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/server-auth.module */ "./libs/server-auth/src/lib/server-auth.module.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServerAuthModule", function() { return _lib_server_auth_module__WEBPACK_IMPORTED_MODULE_0__["ServerAuthModule"]; });
+
+/* harmony import */ var _lib_server_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib/server-auth.service */ "./libs/server-auth/src/lib/server-auth.service.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServerAuthService", function() { return _lib_server_auth_service__WEBPACK_IMPORTED_MODULE_1__["ServerAuthService"]; });
+
+/* harmony import */ var _lib_server_auth_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lib/server-auth.controller */ "./libs/server-auth/src/lib/server-auth.controller.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ServerAuthController", function() { return _lib_server_auth_controller__WEBPACK_IMPORTED_MODULE_2__["ServerAuthController"]; });
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./libs/server-auth/src/lib/server-auth.controller.ts":
+/*!************************************************************!*\
+  !*** ./libs/server-auth/src/lib/server-auth.controller.ts ***!
+  \************************************************************/
+/*! exports provided: ServerAuthController */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ServerAuthController", function() { return ServerAuthController; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _server_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./server-auth.service */ "./libs/server-auth/src/lib/server-auth.service.ts");
+var _a;
+
+
+
+let ServerAuthController = class ServerAuthController {
+    constructor(serverAuthService) {
+        this.serverAuthService = serverAuthService;
+    }
+    getData() {
+        this.serverAuthService.getData();
+    }
+    getUser(id, password) {
+        console.log(password);
+        return this.serverAuthService.getUserById(id);
+    }
+    postData(email, password) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return this.serverAuthService.insertUser(email, password);
+        });
+    }
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Get"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
+], ServerAuthController.prototype, "getData", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Get"])(':id'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Query"])('email')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Query"])('password')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [String, String]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
+], ServerAuthController.prototype, "getUser", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Post"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('email')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('password')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [String, String]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
+], ServerAuthController.prototype, "postData", null);
+ServerAuthController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Controller"])('auth'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _server_auth_service__WEBPACK_IMPORTED_MODULE_2__["ServerAuthService"] !== "undefined" && _server_auth_service__WEBPACK_IMPORTED_MODULE_2__["ServerAuthService"]) === "function" ? _a : Object])
+], ServerAuthController);
+
+
+
+/***/ }),
+
+/***/ "./libs/server-auth/src/lib/server-auth.model.ts":
+/*!*******************************************************!*\
+  !*** ./libs/server-auth/src/lib/server-auth.model.ts ***!
+  \*******************************************************/
+/*! exports provided: UserSchema */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserSchema", function() { return UserSchema; });
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);
+
+const UserSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
+    email: { type: String, required: true },
+    password: { type: String, required: true }
+});
+
+
+/***/ }),
+
+/***/ "./libs/server-auth/src/lib/server-auth.module.ts":
+/*!********************************************************!*\
+  !*** ./libs/server-auth/src/lib/server-auth.module.ts ***!
+  \********************************************************/
+/*! exports provided: ServerAuthModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ServerAuthModule", function() { return ServerAuthModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _server_auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./server-auth.service */ "./libs/server-auth/src/lib/server-auth.service.ts");
+/* harmony import */ var _server_auth_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./server-auth.controller */ "./libs/server-auth/src/lib/server-auth.controller.ts");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nestjs/mongoose */ "@nestjs/mongoose");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _server_auth_model__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./server-auth.model */ "./libs/server-auth/src/lib/server-auth.model.ts");
+
+
+
+
+
+
+let ServerAuthModule = class ServerAuthModule {
+};
+ServerAuthModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
+        imports: [_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__["MongooseModule"].forFeature([{ name: "user", schema: _server_auth_model__WEBPACK_IMPORTED_MODULE_5__["UserSchema"] }])],
+        controllers: [_server_auth_controller__WEBPACK_IMPORTED_MODULE_3__["ServerAuthController"]],
+        providers: [_server_auth_service__WEBPACK_IMPORTED_MODULE_2__["ServerAuthService"]],
+        exports: [_server_auth_service__WEBPACK_IMPORTED_MODULE_2__["ServerAuthService"]]
+    })
+], ServerAuthModule);
+
+
+
+/***/ }),
+
+/***/ "./libs/server-auth/src/lib/server-auth.service.ts":
+/*!*********************************************************!*\
+  !*** ./libs/server-auth/src/lib/server-auth.service.ts ***!
+  \*********************************************************/
+/*! exports provided: ServerAuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ServerAuthService", function() { return ServerAuthService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/mongoose */ "@nestjs/mongoose");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bcrypt */ "bcrypt");
+/* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(bcrypt__WEBPACK_IMPORTED_MODULE_4__);
+var _a;
+
+
+
+
+
+let ServerAuthService = class ServerAuthService {
+    constructor(user) {
+        this.user = user;
+    }
+    getData() {
+        return { message: 'Welcome to web-editor-server!' };
+    }
+    getUserById(email) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const user = this.user.findOne({ email: email });
+            console.log(user);
+            return user;
+        });
+    }
+    insertUser(email, password) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const encryptedPassword = yield bcrypt__WEBPACK_IMPORTED_MODULE_4__["hash"](password, 10);
+            console.log(encryptedPassword);
+            const newUser = new this.user({
+                email,
+                password: encryptedPassword
+            });
+            const result = yield newUser.save();
+            return result.id;
+        });
+    }
+};
+ServerAuthService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__["InjectModel"])('user')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof mongoose__WEBPACK_IMPORTED_MODULE_3__["Model"] !== "undefined" && mongoose__WEBPACK_IMPORTED_MODULE_3__["Model"]) === "function" ? _a : Object])
+], ServerAuthService);
+
 
 
 /***/ }),
@@ -260,6 +484,39 @@ module.exports = require("@nestjs/common");
 /***/ (function(module, exports) {
 
 module.exports = require("@nestjs/core");
+
+/***/ }),
+
+/***/ "@nestjs/mongoose":
+/*!***********************************!*\
+  !*** external "@nestjs/mongoose" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@nestjs/mongoose");
+
+/***/ }),
+
+/***/ "bcrypt":
+/*!*************************!*\
+  !*** external "bcrypt" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("bcrypt");
+
+/***/ }),
+
+/***/ "mongoose":
+/*!***************************!*\
+  !*** external "mongoose" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mongoose");
 
 /***/ }),
 

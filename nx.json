@@ -20,6 +20,15 @@
     },
     "web-editor-server": {
       "tags": []
+    },
+    "visual-editor": {
+      "tags": []
+    },
+    "landing-page": {
+      "tags": []
+    },
+    "server-auth": {
+      "tags": []
     }
   }
 }

@@ -166,6 +166,88 @@
           }
         }
       }
+    },
+    "visual-editor": {
+      "root": "libs/visual-editor",
+      "sourceRoot": "libs/visual-editor/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/visual-editor/.eslintrc",
+            "tsConfig": [
+              "libs/visual-editor/tsconfig.lib.json",
+              "libs/visual-editor/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/visual-editor/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/visual-editor/jest.config.js",
+            "tsConfig": "libs/visual-editor/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "landing-page": {
+      "root": "libs/landing-page",
+      "sourceRoot": "libs/landing-page/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/landing-page/.eslintrc",
+            "tsConfig": [
+              "libs/landing-page/tsconfig.lib.json",
+              "libs/landing-page/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/landing-page/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/landing-page/jest.config.js",
+            "tsConfig": "libs/landing-page/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "server-auth": {
+      "root": "libs/server-auth",
+      "sourceRoot": "libs/server-auth/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/server-auth/tsconfig.lib.json",
+              "libs/server-auth/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/server-auth/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/server-auth/jest.config.js",
+            "tsConfig": "libs/server-auth/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   },
   "cli": {

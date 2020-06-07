@@ -15,7 +15,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@web-editor/visual-editor": ["libs/visual-editor/src/index.ts"],
+      "@web-editor/landing-page": ["libs/landing-page/src/index.ts"],
+      "@web-editor/server-auth": ["libs/server-auth/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
