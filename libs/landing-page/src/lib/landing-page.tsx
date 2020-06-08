@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 
 import './landing-page.scss';
-import {Form} from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import axios from 'axios';
-import * as bcrypt from 'bcrypt';
+import LoginModal from "./login-modal/login-modal";
+import SignupModal from "./signup-modal/signup-modal";
+import Cookies from 'universal-cookie';
+import {Route} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 /* eslint-disable-next-line */
 export interface LandingPageProps {}
@@ -12,52 +14,80 @@ export interface LandingPageProps {}
 export const LandingPage = (props: LandingPageProps) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [userName, setUsername] = useState(null);
   const [wasRegistered, setWasRegistered] = useState(null);
+  const [emailAlreadyInUse, setEmailAlreadyInUse] = useState(false);
+  const [userNotFound, setUserNotFound] = useState(false);
 
-  const handleSubmit = (event) => {
+  const cookies = new Cookies();
+  const history = useHistory();
+
+  if(wasRegistered) {
+    history.push("/login");
+  }
+
+  const handleSubmit = (event: any) => {
     event.preventDefault();
-    axios.get('http://localhost:3333/api/auth?id=' + email)
+    axios.post('http://localhost:3333/api/auth', {name: userName, email, password})
       .then(res => {
         setWasRegistered(res.data);
       })
+      .catch(err => {
+        if(err.response.status === 409) {
+          setEmailAlreadyInUse(true);
+        }
+      })
   };
 
-  const handleChangeEmail = (event) => {
+  const handleUsername = (event: any) => {
+    const userNameValue = event.target.value;
+    setUsername(userNameValue);
+  };
+
+  const handleChangeEmail = (event: any) => {
     const emailValue = event.target.value;
     setEmail(emailValue);
   };
 
-  const handleChangePassword = (event) => {
+  const handleChangePassword = (event: any) => {
     const passwordValue = event.target.value;
     setPassword(passwordValue);
   };
-  if(wasRegistered) {
-    if(wasRegistered.password){
-      return <div>YAY IT WAS REGISTERED</div>
-    }
-  }
-  return (
-    <div>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" onChange={handleChangeEmail} />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
-        </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" onChange={handleChangePassword}/>
-        </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit" >
-          Submit
-        </Button>
-      </Form>
+  const handleLogin = (event: any) => {
+    event.preventDefault();
+    axios.post('http://localhost:3333/api/auth/login', { email, password})
+      .then(res => {
+        const bearerToken = res.data.bearerToken;
+        cookies.set("bearerToken", bearerToken);
+        history.push('/designList')
+      })
+      .catch(err => {
+        if(err.response.status === 404) {
+          setUserNotFound(true);
+        }
+      })
+  };
+
+  return (
+    <div className='landing-page'>
+      <div className='sign-up-sidebar'>
+        <Route exact path={'/login'}>
+          <LoginModal
+            userNotFound={userNotFound}
+            handleSubmit={handleLogin}
+            handleChangeEmail={handleChangeEmail}
+            handleChangePassword={handleChangePassword}/>
+        </Route>
+        <Route path='/sign-up'>
+          <SignupModal
+            handleSubmit={handleSubmit}
+            handleChangeEmail={handleChangeEmail}
+            handleChangePassword={handleChangePassword}
+            handleChangeUsername={handleUsername}
+            emailAlreadyInUse={emailAlreadyInUse}/>
+        </Route>
+      </div>
     </div>
   );
 };
