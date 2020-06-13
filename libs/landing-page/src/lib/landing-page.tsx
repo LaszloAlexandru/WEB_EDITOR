@@ -22,6 +22,20 @@ export const LandingPage = (props: LandingPageProps) => {
   const cookies = new Cookies();
   const history = useHistory();
 
+  const checkBearerToken = async () => {
+    const bearerToken = cookies.get("bearerToken");
+
+    if (bearerToken) {
+      await axios.post('http://localhost:3333/api/auth/verify', {bearerToken})
+        .then(res => {
+          history.push('/design-list')
+        })
+
+    }
+  };
+
+  checkBearerToken();
+
   if(wasRegistered) {
     history.push("/login");
   }
@@ -60,7 +74,7 @@ export const LandingPage = (props: LandingPageProps) => {
       .then(res => {
         const bearerToken = res.data.bearerToken;
         cookies.set("bearerToken", bearerToken);
-        history.push('/designList')
+        history.push('/design-list')
       })
       .catch(err => {
         if(err.response.status === 404) {

@@ -1,70 +1,33 @@
-import React from 'react';
-import Form from 'react-bootstrap/Form'
+import React, {useState} from 'react';
 import './visual-editor.scss';
 import Editor from "./editor/editor";
 import Button from "react-bootstrap/Button";
+import {Navbar} from "react-bootstrap";
 
 /* eslint-disable-next-line */
-export interface VisualEditorProps {}
-
-
-export interface VisualEditorState {
-  display: boolean;
-  iframeURL: string;
+export interface VisualEditorProps {
+  iframeUrl: string;
 }
 
-export class VisualEditor extends React.Component<VisualEditorProps, VisualEditorState> {
+export const VisualEditor = (props:VisualEditorProps) => {
 
-  constructor(props: VisualEditorProps){
-    super(props);
-    this.state = {
-      display:false,
-      iframeURL: null
-    }
-  }
+  return (
+    <div className='editor-page'>
+      <Navbar expand="lg" variant="dark" className='editor-nav'>
+          <div className='editor-buttons'>
+            <Button>More deets</Button>
+            <Button>
+              Dank memes
+            </Button>
+          </div>
+      </Navbar>
 
-  handleURLSubmit = (event) => {
-    const form = event.currentTarget;
-    const newURL = form.url.value;
-    this.setState(
-      {
-        display: !this.state.display,
-        iframeURL: newURL
-      }
-    );
-  };
-
-  displayForm = () => {
-    return (
-      <div>
-        <Form onSubmit={this.handleURLSubmit}>
-          <Form.Group controlId = "formBasicURL">
-            <Form.Label> URL</Form.Label>
-            <Form.Control type="text" name="url" placeholder="Enter URL" />
-          </Form.Group>
-          <Button type={"submit"} variant="primary" />
-        </Form>
+      <div className='editor-container'>
+        <Editor iframeURL={props.iframeUrl}/>
       </div>
-    );
-  };
 
-  displayEditor = () => {
-    return (
-      <div>
-        <Editor iframeURL={this.state.iframeURL}/>
-      </div>
-    )
-  };
-
-
-  render () {
-    if(!this.state.display){
-      return this.displayForm();
-    } else {
-      return this.displayEditor();
-    }
-  }
-
+    </div>
+  )
 };
 
 export default VisualEditor;

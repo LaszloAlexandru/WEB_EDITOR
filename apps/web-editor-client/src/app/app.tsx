@@ -3,12 +3,13 @@ import React, {useState} from 'react';
 import './app.scss';
 import {
   BrowserRouter as Router,
-  Route, useHistory // for later
+  Route, useHistory , Redirect// for later
 } from 'react-router-dom';
 import {VisualEditor} from "@web-editor/visual-editor"
 import {LandingPage} from '@web-editor/landing-page';
 import axios from "axios";
 import Cookies from "universal-cookie";
+import {DesignList} from "@web-editor/design-list";
 
 export const App = () => {
   /*
@@ -26,7 +27,6 @@ export const App = () => {
     if (bearerToken) {
       await axios.post('http://localhost:3333/api/auth/verify', {bearerToken})
         .then(res => {
-          history.push('/designList');
           setCheckToken(true);
         })
         .catch(err => {
@@ -54,8 +54,11 @@ export const App = () => {
   return (
     <div className="app">
       <Router>
-        <Route path='/designList' component={VisualEditor} />
+        <Route path='/design-list' component={DesignList} />
         <Route path='/login' component={LandingPage} />
+        <Route exact path='/'  >
+          <Redirect to='/design-list'/>
+        </Route>
       </Router>
     </div>
   );

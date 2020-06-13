@@ -1,0 +1,22 @@
+.design-buttons {
+  .design-button {
+    margin-right:5px;
+    border-radius: 5px !important;
+    font-size:16px;
+    .design-buttons-icons{
+
+      margin-left:5px;
+      padding-bottom:3px;
+      svg {
+       margin-bottom: 5px;
+      }
+    }
+    :last-of-type{}
+  }
+}
+.list-item-row{
+  text-align: center;
+  :first-of-type{
+    text-align: left;
+  }
+}

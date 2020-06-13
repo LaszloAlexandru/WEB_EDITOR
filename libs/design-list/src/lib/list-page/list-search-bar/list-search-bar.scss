@@ -1,0 +1,14 @@
+.list-search-bar{
+  position:sticky;
+  top:0;
+  z-index: 1001;
+  height:75px;
+  background: #36343a;
+
+  .create-design-button {
+    position: absolute;
+    width:180px;
+    font-size:18px;
+    right: 5%;
+  }
+}
