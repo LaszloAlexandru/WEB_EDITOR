@@ -15,9 +15,9 @@ export const VisualEditor = (props:VisualEditorProps) => {
     <div className='editor-page'>
       <Navbar expand="lg" variant="dark" className='editor-nav'>
           <div className='editor-buttons'>
-            <Button>More deets</Button>
+            <Button>Save</Button>
             <Button>
-              Dank memes
+              Cancel
             </Button>
           </div>
       </Navbar>

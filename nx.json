@@ -32,6 +32,12 @@
     },
     "design-list": {
       "tags": []
+    },
+    "design-crud": {
+      "tags": []
+    },
+    "public-api": {
+      "tags": []
     }
   }
 }

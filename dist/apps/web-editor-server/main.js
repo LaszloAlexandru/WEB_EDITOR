@@ -146,7 +146,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _app_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.controller */ "./apps/web-editor-server/src/app/app.controller.ts");
 /* harmony import */ var _app_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.service */ "./apps/web-editor-server/src/app/app.service.ts");
-/* harmony import */ var _libs_server_auth_src__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../libs/server-auth/src */ "./libs/server-auth/src/index.ts");
+/* harmony import */ var _web_editor_server_auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @web-editor/server-auth */ "./libs/server-auth/src/index.ts");
+/* harmony import */ var _web_editor_design_crud__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @web-editor/design-crud */ "./libs/design-crud/src/index.ts");
+
 
 
 
@@ -159,7 +161,8 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
         imports: [
             _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__["MongooseModule"].forRoot('mongodb+srv://TestUser:NSLKDrhDjOmtEKeY@web-editor-mp3gm.mongodb.net/Web-Editor?retryWrites=true&w=majority'),
-            _libs_server_auth_src__WEBPACK_IMPORTED_MODULE_5__["ServerAuthModule"]
+            _web_editor_server_auth__WEBPACK_IMPORTED_MODULE_5__["ServerAuthModule"],
+            _web_editor_design_crud__WEBPACK_IMPORTED_MODULE_6__["DesignCrudModule"]
         ],
         controllers: [_app_controller__WEBPACK_IMPORTED_MODULE_3__["AppController"]],
         providers: [_app_service__WEBPACK_IMPORTED_MODULE_4__["AppService"]]
@@ -233,6 +236,266 @@ function bootstrap() {
     });
 }
 bootstrap();
+
+
+/***/ }),
+
+/***/ "./libs/design-crud/src/index.ts":
+/*!***************************************!*\
+  !*** ./libs/design-crud/src/index.ts ***!
+  \***************************************/
+/*! exports provided: DesignCrudModule, DesignCrudService, DesignCrudController */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _lib_design_crud_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib/design-crud.module */ "./libs/design-crud/src/lib/design-crud.module.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DesignCrudModule", function() { return _lib_design_crud_module__WEBPACK_IMPORTED_MODULE_0__["DesignCrudModule"]; });
+
+/* harmony import */ var _lib_design_crud_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib/design-crud.service */ "./libs/design-crud/src/lib/design-crud.service.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DesignCrudService", function() { return _lib_design_crud_service__WEBPACK_IMPORTED_MODULE_1__["DesignCrudService"]; });
+
+/* harmony import */ var _lib_design_crud_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./lib/design-crud.controller */ "./libs/design-crud/src/lib/design-crud.controller.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DesignCrudController", function() { return _lib_design_crud_controller__WEBPACK_IMPORTED_MODULE_2__["DesignCrudController"]; });
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./libs/design-crud/src/lib/design-crud.controller.ts":
+/*!************************************************************!*\
+  !*** ./libs/design-crud/src/lib/design-crud.controller.ts ***!
+  \************************************************************/
+/*! exports provided: DesignCrudController */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DesignCrudController", function() { return DesignCrudController; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _design_crud_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./design-crud.service */ "./libs/design-crud/src/lib/design-crud.service.ts");
+var _a;
+
+
+
+let DesignCrudController = class DesignCrudController {
+    constructor(designCrudService) {
+        this.designCrudService = designCrudService;
+    }
+    getTestData() {
+        return "It works";
+    }
+    getModification(email, name) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return yield this.designCrudService.getDesignById(email, name);
+        });
+    }
+    getModifications(email, token) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            console.log(email, token);
+            const response = yield this.designCrudService.getActiveDesigns(email, token);
+            console.log(response);
+            return response;
+        });
+    }
+    postData(email, name, active, jsModification, genericModifications, resizeModifications) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return yield this.designCrudService.addDesign(email, name, active, jsModification, genericModifications, resizeModifications);
+        });
+    }
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Get"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", []),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", void 0)
+], DesignCrudController.prototype, "getTestData", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Get"])('/modification'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('email')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('name')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [String, String]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
+], DesignCrudController.prototype, "getModification", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Get"])('/getActiveModifications'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Query"])('email')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Query"])('token')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [String, String]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
+], DesignCrudController.prototype, "getModifications", null);
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Post"])('addDesign'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('email')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('name')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(2, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('active')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(3, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('jsModification')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(4, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('genericModification')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(5, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Body"])('resizeModifications')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [String, String, Boolean, Array, Array, Array]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
+], DesignCrudController.prototype, "postData", null);
+DesignCrudController = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Controller"])('design-crud'),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof _design_crud_service__WEBPACK_IMPORTED_MODULE_2__["DesignCrudService"] !== "undefined" && _design_crud_service__WEBPACK_IMPORTED_MODULE_2__["DesignCrudService"]) === "function" ? _a : Object])
+], DesignCrudController);
+
+
+
+/***/ }),
+
+/***/ "./libs/design-crud/src/lib/design-crud.model.ts":
+/*!*******************************************************!*\
+  !*** ./libs/design-crud/src/lib/design-crud.model.ts ***!
+  \*******************************************************/
+/*! exports provided: JavascriptInjectionSchema, GenericModificationSchema, ResizeModificationSchema, DesignSchema */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JavascriptInjectionSchema", function() { return JavascriptInjectionSchema; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GenericModificationSchema", function() { return GenericModificationSchema; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResizeModificationSchema", function() { return ResizeModificationSchema; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DesignSchema", function() { return DesignSchema; });
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_0__);
+
+const JavascriptInjectionSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
+    type: { type: String, required: true },
+    value: { type: String, required: true }
+});
+const GenericModificationSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
+    type: { type: String, required: true },
+    selector: { type: String, required: true },
+    value: { type: String, required: true }
+});
+const ResizeModificationSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
+    type: { type: String, required: true },
+    selector: { type: String, required: true },
+    value: {
+        width: { type: String },
+        height: { type: String }
+    }
+});
+const DesignSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
+    email: { type: String, required: true },
+    name: { type: String, required: true },
+    active: { type: Boolean, required: true },
+    javascriptInjections: { type: [JavascriptInjectionSchema], required: false },
+    genericModifications: { type: [GenericModificationSchema], required: false },
+    resizeModifications: { type: [ResizeModificationSchema], required: false }
+});
+
+
+/***/ }),
+
+/***/ "./libs/design-crud/src/lib/design-crud.module.ts":
+/*!********************************************************!*\
+  !*** ./libs/design-crud/src/lib/design-crud.module.ts ***!
+  \********************************************************/
+/*! exports provided: DesignCrudModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DesignCrudModule", function() { return DesignCrudModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _design_crud_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./design-crud.service */ "./libs/design-crud/src/lib/design-crud.service.ts");
+/* harmony import */ var _design_crud_controller__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./design-crud.controller */ "./libs/design-crud/src/lib/design-crud.controller.ts");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @nestjs/mongoose */ "@nestjs/mongoose");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _design_crud_model__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./design-crud.model */ "./libs/design-crud/src/lib/design-crud.model.ts");
+
+
+
+
+
+
+let DesignCrudModule = class DesignCrudModule {
+};
+DesignCrudModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Module"])({
+        imports: [_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_4__["MongooseModule"].forFeature([{ name: 'design', schema: _design_crud_model__WEBPACK_IMPORTED_MODULE_5__["DesignSchema"] }])],
+        controllers: [_design_crud_controller__WEBPACK_IMPORTED_MODULE_3__["DesignCrudController"]],
+        providers: [_design_crud_service__WEBPACK_IMPORTED_MODULE_2__["DesignCrudService"]],
+        exports: [_design_crud_service__WEBPACK_IMPORTED_MODULE_2__["DesignCrudService"]]
+    })
+], DesignCrudModule);
+
+
+
+/***/ }),
+
+/***/ "./libs/design-crud/src/lib/design-crud.service.ts":
+/*!*********************************************************!*\
+  !*** ./libs/design-crud/src/lib/design-crud.service.ts ***!
+  \*********************************************************/
+/*! exports provided: DesignCrudService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DesignCrudService", function() { return DesignCrudService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "tslib");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tslib__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
+/* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @nestjs/mongoose */ "@nestjs/mongoose");
+/* harmony import */ var _nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! mongoose */ "mongoose");
+/* harmony import */ var mongoose__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(mongoose__WEBPACK_IMPORTED_MODULE_3__);
+var _a;
+
+
+
+
+let DesignCrudService = class DesignCrudService {
+    constructor(design) {
+        this.design = design;
+    }
+    getDesignById(email, name) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return this.design.findOne({ email: email, name: name });
+        });
+    }
+    getActiveDesigns(email, token) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            return this.design.find({ email: email, active: true });
+        });
+    }
+    addDesign(email, name, active, jsModifications, genericModifications, resizeModifications) {
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
+            const newDesign = new this.design({
+                email,
+                name,
+                active,
+                javascriptInjections: jsModifications,
+                genericModifications,
+                resizeModifications
+            });
+            const result = yield newDesign.save();
+            return result.id;
+        });
+    }
+};
+DesignCrudService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_mongoose__WEBPACK_IMPORTED_MODULE_2__["InjectModel"])('design')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [typeof (_a = typeof mongoose__WEBPACK_IMPORTED_MODULE_3__["Model"] !== "undefined" && mongoose__WEBPACK_IMPORTED_MODULE_3__["Model"]) === "function" ? _a : Object])
+], DesignCrudService);
+
 
 
 /***/ }),
