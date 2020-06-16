@@ -9,21 +9,25 @@ import {Button, Form, FormControl} from "react-bootstrap";
 import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
 import {VisualEditor, Editor} from "@web-editor/visual-editor";
 import _ from 'lodash';
+import AppNav from "./app-nav/app-nav";
+import {AboutPage} from "@web-editor/about-page";
+import ListComponent from "./list-page/list-component/list-component";
 /* eslint-disable-next-line */
 export interface DesignListProps {}
 
 export const DesignList = (props: DesignListProps) => {
   const [show, setShow] = useState(false);
   const [websiteUrl, setUrl] = useState(null);
+  const [filter, setFilter] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   let debouncedFn = null;
 
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
   const history = useHistory();
-  console.log(path, url);
+
   const handleUrlChange = (event) => {
     event.persist();
     if(!debouncedFn){
@@ -35,17 +39,30 @@ export const DesignList = (props: DesignListProps) => {
     debouncedFn();
   };
 
+
+  const handleFilterChange = (event) => {
+    event.persist();
+    if(!debouncedFn){
+      debouncedFn =  _.debounce(() => {
+        setFilter(event.target.value);
+      }, 300);
+    }
+
+    debouncedFn();
+  };
+
   const handleCreate = () => {
+    setShow(false);
     history.push(path + '/editor');
   };
 
   return (
     <div className='main-container'>
-      <SideNav/>
+      <AppNav handleCreate={handleShow} handleFilterChange={handleFilterChange}/>
       <Switch>
         <Route exact path={path}>
           <div className='main-content-container'>
-            <ListPage handleModalShow={handleShow}/>
+            <ListComponent filter={filter}/>
           </div>
           <Modal show={show} onHide={handleClose} className='url-modal'>
             <Modal.Header closeButton style={{border:"none"}}>
@@ -68,6 +85,9 @@ export const DesignList = (props: DesignListProps) => {
         </Route>
         <Route exact path={path + '/editor'}>
           <VisualEditor iframeUrl={websiteUrl}/>
+        </Route>
+        <Route exact path={path + '/guide'}>
+          <AboutPage/>
         </Route>
       </Switch>
 

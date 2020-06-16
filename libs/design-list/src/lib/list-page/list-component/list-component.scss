@@ -16,7 +16,13 @@
 }
 .list-item-row{
   text-align: center;
-  :first-of-type{
-    text-align: left;
-  }
+  padding:0;
+  margin:0;
+}
+.design-list-header{
+  background-color: #f3f3f3;
+}
+.design-list-cell{
+  border-right: 1px solid #4b4950;
+  padding:0.75rem 0;
 }

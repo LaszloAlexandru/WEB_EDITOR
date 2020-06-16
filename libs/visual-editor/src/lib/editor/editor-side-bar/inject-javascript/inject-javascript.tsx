@@ -18,7 +18,7 @@ export const InjectJavascript = (props: InjectJavascriptProps) => {
 
   const handleJsCodeSubmit = () => {
     const modification = {
-      name: "JavaScript Code",
+      name: "jsModification",
       path: 'head',
       value:  jsCode
     };

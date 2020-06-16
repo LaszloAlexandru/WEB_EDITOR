@@ -18,7 +18,7 @@ export const ChangeInnerText = (props: ChangeInnerTexttProps) => {
 
   const handleJsCodeSubmit = () => {
     const modification = {
-      name: "Change inner text",
+      name: "textInjection",
       path: props.path,
       value:  innerText
     };

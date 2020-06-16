@@ -73,6 +73,7 @@ export const LandingPage = (props: LandingPageProps) => {
     axios.post('http://localhost:3333/api/auth/login', { email, password})
       .then(res => {
         const bearerToken = res.data.bearerToken;
+        cookies.set("email", email);
         cookies.set("bearerToken", bearerToken);
         history.push('/design-list')
       })

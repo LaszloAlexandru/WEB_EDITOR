@@ -22,7 +22,8 @@ export const BackgroundChange = (props: BackgroundChangeProps) => {
 
   const handleBackgroundSubmit = (e) => {
     const modification = {
-      name: "Background change",
+      name: "backgroundChange",
+      type: "genericModification",
       path: props.path,
       value:  color.hex
     };
@@ -34,9 +35,8 @@ export const BackgroundChange = (props: BackgroundChangeProps) => {
       "path" : props.path,
       "type": "background-change",
       "action": "click",
-      "style": {
-        background: color.hex
-      }
+      "style": color.hex
+
     }, "*");
 
     handleClose();

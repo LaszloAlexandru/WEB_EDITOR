@@ -38,6 +38,12 @@
     },
     "public-api": {
       "tags": []
+    },
+    "settings-page": {
+      "tags": []
+    },
+    "about-page": {
+      "tags": []
     }
   }
 }

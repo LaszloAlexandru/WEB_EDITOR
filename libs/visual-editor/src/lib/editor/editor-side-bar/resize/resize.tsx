@@ -21,7 +21,10 @@ export const Resize = (props: ResizeProps) => {
     const modification = {
       name: "Resize",
       path: props.path,
-      value:  "width:" + width + ", height:" + height
+      value:  {
+        width: width,
+        height: height
+      }
     };
     props.addModification(modification);
     const iFrame = document.getElementsByClassName("myClassname")[0];
@@ -29,7 +32,7 @@ export const Resize = (props: ResizeProps) => {
     // @ts-ignore
     iFrame.contentWindow.postMessage({
       "path" : props.path,
-      "type": "resize",
+      "type": "resizeModification",
       "resize": {
         width,
         height

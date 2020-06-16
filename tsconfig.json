@@ -21,7 +21,9 @@
       "@web-editor/server-auth": ["libs/server-auth/src/index.ts"],
       "@web-editor/design-list": ["libs/design-list/src/index.ts"],
       "@web-editor/design-crud": ["libs/design-crud/src/index.ts"],
-      "@web-editor/public-api": ["libs/public-api/src/index.ts"]
+      "@web-editor/public-api": ["libs/public-api/src/index.ts"],
+      "@web-editor/settings-page": ["libs/settings-page/src/index.ts"],
+      "@web-editor/about-page": ["libs/about-page/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

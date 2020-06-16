@@ -143,6 +143,11 @@
           "builder": "@nrwl/node:execute",
           "options": {
             "buildTarget": "web-editor-server:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "web-editor-server:build:production"
+            }
           }
         },
         "lint": {
@@ -324,6 +329,62 @@
           "options": {
             "jestConfig": "libs/public-api/jest.config.js",
             "tsConfig": "libs/public-api/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "settings-page": {
+      "root": "libs/settings-page",
+      "sourceRoot": "libs/settings-page/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/settings-page/.eslintrc",
+            "tsConfig": [
+              "libs/settings-page/tsconfig.lib.json",
+              "libs/settings-page/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/settings-page/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/settings-page/jest.config.js",
+            "tsConfig": "libs/settings-page/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "about-page": {
+      "root": "libs/about-page",
+      "sourceRoot": "libs/about-page/src",
+      "projectType": "library",
+      "schematics": {},
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "libs/about-page/.eslintrc",
+            "tsConfig": [
+              "libs/about-page/tsconfig.lib.json",
+              "libs/about-page/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/about-page/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/about-page/jest.config.js",
+            "tsConfig": "libs/about-page/tsconfig.spec.json",
             "passWithNoTests": true
           }
         }

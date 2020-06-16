@@ -43,6 +43,7 @@ export interface ResizeModificationModel extends mongoose.Document {
 export const DesignSchema = new mongoose.Schema({
   email: {type: String, required: true},
   name: {type:String, required: true},
+  timestamp: {type:String, required: true},
   active: {type: Boolean, required:true},
   javascriptInjections: {type: [JavascriptInjectionSchema], required:false},
   genericModifications: {type: [GenericModificationSchema], required:false},
@@ -52,6 +53,7 @@ export const DesignSchema = new mongoose.Schema({
 export interface DesignCrudModel extends mongoose.Document {
   email: string,
   name: string,
+  timestamp:string,
   active: boolean,
   javascriptInjections: [JavascriptInjectionModel],
   genericModifications: [GenericModificationModel],

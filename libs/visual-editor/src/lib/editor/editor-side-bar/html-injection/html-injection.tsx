@@ -19,7 +19,7 @@ export const HtmlInjection = (props: HtmlInjectionProps) => {
 
   const handleCssCodeSubmit = () => {
     const modification = {
-      name: "Insert html elements ",
+      name: "htmlInjection",
       path: props.path,
       value:  html
     };

@@ -19,7 +19,7 @@ export const CssInjection = (props: CssInjectionProps) => {
 
   const handleCssCodeSubmit = () => {
     const modification = {
-      name: "Insert css class",
+      name: "cssInjection",
       path: props.path,
       value:  css
     };

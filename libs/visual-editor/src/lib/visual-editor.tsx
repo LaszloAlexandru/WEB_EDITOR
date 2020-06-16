@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './visual-editor.scss';
 import Editor from "./editor/editor";
-import Button from "react-bootstrap/Button";
-import {Navbar} from "react-bootstrap";
+
 
 /* eslint-disable-next-line */
 export interface VisualEditorProps {
@@ -13,15 +12,6 @@ export const VisualEditor = (props:VisualEditorProps) => {
 
   return (
     <div className='editor-page'>
-      <Navbar expand="lg" variant="dark" className='editor-nav'>
-          <div className='editor-buttons'>
-            <Button>Save</Button>
-            <Button>
-              Cancel
-            </Button>
-          </div>
-      </Navbar>
-
       <div className='editor-container'>
         <Editor iframeURL={props.iframeUrl}/>
       </div>

@@ -12,8 +12,7 @@ export interface ListPageProps {
 export const ListPage = (props: ListPageProps) => {
   return (
     <>
-      <ListSearchBar handleModalShow={props.handleModalShow}/>
-      <ListComponent/>
+
     </>
   );
 };
