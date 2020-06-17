@@ -1,5 +1,4 @@
-
-
+var previousElement;
 var hoverClass = document.createElement('style');
 hoverClass.type = 'text/css';
 hoverClass.innerHTML = '.textHover { border: 2px solid red; }';
@@ -14,25 +13,27 @@ function getIndex(element, nodes) {
 }
 
 function getPath (e, xPath) {
-  if(e.nodeName === "BODY")
+  if(e != null) {
+    if(e.nodeName === "BODY")
+      return xPath;
+    getPath(e.parentElement, xPath);
+    const filteredNodes = [];
+    for(let i = 0; i < e.parentElement.childNodes.length; ++i){
+      if(e.parentElement.childNodes[i].nodeName === e.nodeName){
+        filteredNodes.push(e.parentElement.childNodes[i]);
+      }
+    }
+    if(filteredNodes.length > 1){
+      const index = getIndex(e, filteredNodes);
+      if (index > 1) {
+        xPath.push(e.nodeName.toString() + "[" + index + "]");
+      } else {
+        xPath.push(e.nodeName.toString());
+      }
+    }
+    else xPath.push(e.nodeName.toString());
     return xPath;
-  getPath(e.parentElement, xPath);
-  const filteredNodes = [];
-  for(let i = 0; i < e.parentElement.childNodes.length; ++i){
-    if(e.parentElement.childNodes[i].nodeName === e.nodeName){
-      filteredNodes.push(e.parentElement.childNodes[i]);
-    }
   }
-  if(filteredNodes.length > 1){
-    const index = getIndex(e, filteredNodes);
-    if (index > 1) {
-      xPath.push(e.nodeName.toString() + "[" + index + "]");
-    } else {
-      xPath.push(e.nodeName.toString());
-    }
-  }
-  else xPath.push(e.nodeName.toString());
-  return xPath;
 }
 
 function submitForm() {
@@ -42,7 +43,7 @@ function submitForm() {
 function getElementByXpath(path) {
   if(path != null){
     let selector = path.split("/");
-    let searchedElemen = []
+    let searchedElemen = [];
     for(var elem of selector){
       if(elem.includes("[")){
         let parsedElem = elem.slice(0,elem.length-1).split("[");
@@ -81,8 +82,16 @@ function getElementByXpath(path) {
 document.addEventListener("click", function(e){
   let xPath = [];
   xPath = getPath(e.target, xPath);
+  const element = getElementByXpath(xPath.join("/").toLowerCase());
+  const serializer = new XMLSerializer();
+  const innerHTML = [];
+  const innerText = element.innerText;
+  const children = Array.from(element.children);
+  children.forEach(x => innerHTML.push(serializer.serializeToString(x)));
   window.parent.postMessage({
     path: xPath.join("/").toLowerCase(),
+    innerHTML: innerHTML,
+    innerText,
     action: 'click'
   }, '*');
 });
@@ -91,7 +100,6 @@ document.addEventListener("click", function(e){
 document.addEventListener("mouseover", function(e){
   let xPath = [];
   xPath = getPath(e.target, xPath);
-  console.log(xPath.join("/").toLowerCase());
   window.parent.postMessage({
     path: xPath.join("/").toLowerCase(),
     action: 'mouseover'
@@ -126,10 +134,11 @@ const handleCssInjection = (element, text) => {
 
 const handleChangeText = (element, text) => {
   element.innerHTML =  text;
-}
+};
 
 const handleHtmlInjection = (element, htmlText) => {
   const newElements = htmlToElements(htmlText);
+  element.innerHTML = "";
   newElements.forEach(el => element.appendChild(el));
 };
 
@@ -138,7 +147,7 @@ const handleResize = (element, width, height) => {
   const parsedHeight = height + 'px !important;';
   element.setAttribute('style', 'width' + ": " + parsedWidth);
   element.setAttribute('style', 'height' + ": " + parsedHeight);
-}
+};
 
 function htmlToElements(html) {
   let template = document.createElement('template');
@@ -148,10 +157,11 @@ function htmlToElements(html) {
 
 const handleIframeTask = (e) => {
   let element = getElementByXpath(e.data.path);
-  if(e.data.action === 'mouseover') {
+  if(e.data.action === 'mouseover' && element != null) {
     element.className = element.className + " " + 'textHover';
   }
   if(e.data.action === "click"){
+    removeSelector(element);
     for(let key  in e.data.style) {
       element.setAttribute('style', key + ": " + e.data.style[key]);
     }
@@ -176,44 +186,51 @@ const handleIframeTask = (e) => {
       handleResize(element, e.data.resize.width, e.data.resize.height);
       break;
   }
+
+};
+
+const removeSelector = (element) => {
+  if(previousElement != null && previousElement.style.border === "1px solid blue") {
+    previousElement.style.border = 'none';
+  }
+  previousElement = element;
 };
 
 const applyModifications = (modifications) => {
-   modifications.forEach(modification => {
-     const js = modification.javascriptInjections;
-     const genericModifications = modification.genericModifications;
-     const resizeModifications = modification.resizeModifications;
-     js.forEach(jsInjection => {
-       handleJavascriptInjection(jsInjection.value);
-     });
-     genericModifications.forEach(genericModification => {
-       switch(genericModification.type) {
-         case "cssInjection":
-           let elementCss = getElementByXpath(genericModification.selector);
-           handleCssInjection(elementCss, genericModification.value);
-           break;
-         case "textInjection":
-           let elementText = getElementByXpath(genericModification.selector);
-           handleChangeText(elementText, genericModification.value);
-           break;
-         case "htmlInjection":
-           let elementHtml = getElementByXpath(genericModification.selector);
-           handleHtmlInjection(elementHtml, genericModification.value);
-           break;
-         case "backgroundChange":
-           let elementBackground = getElementByXpath(genericModification.selector);
-           handleBackgroundChange(elementBackground, genericModification.value);
-           break;
-       }
-     })
-     resizeModifications.forEach(resize => {
-       console.log(resize);
-       const width = resize.value.width;
-       const height = resize.value.height;
-       let element = getElementByXpath(resize.selector);
-       handleResize(element, width, height);
-     })
-   })
+  modifications.forEach(modification => {
+    const js = modification.javascriptInjections;
+    const genericModifications = modification.genericModifications;
+    const resizeModifications = modification.resizeModifications;
+    js.forEach(jsInjection => {
+      handleJavascriptInjection(jsInjection.value);
+    });
+    genericModifications.forEach(genericModification => {
+      switch(genericModification.type) {
+        case "cssInjection":
+          let elementCss = getElementByXpath(genericModification.selector);
+          handleCssInjection(elementCss, genericModification.value);
+          break;
+        case "textInjection":
+          let elementText = getElementByXpath(genericModification.selector);
+          handleChangeText(elementText, genericModification.value);
+          break;
+        case "htmlInjection":
+          let elementHtml = getElementByXpath(genericModification.selector);
+          handleHtmlInjection(elementHtml, genericModification.value);
+          break;
+        case "backgroundChange":
+          let elementBackground = getElementByXpath(genericModification.selector);
+          handleBackgroundChange(elementBackground, genericModification.value);
+          break;
+      }
+    })
+    resizeModifications.forEach(resize => {
+      const width = resize.value.width;
+      const height = resize.value.height;
+      let element = getElementByXpath(resize.selector);
+      handleResize(element, width, height);
+    })
+  })
 };
 
 
