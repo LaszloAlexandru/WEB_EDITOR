@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import './editor-side-bar.scss';
-import {Button, ButtonGroup, Form, FormControl, InputGroup, ListGroup, Modal} from "react-bootstrap";
+import {Button, Form, FormControl, InputGroup, ListGroup, Modal} from "react-bootstrap";
 import BackgroundChange from "./background-change/background-change";
 import {InjectJavascript} from "./inject-javascript/inject-javascript";
 import {ChangeInnerText} from "./change-inner-text/change-inner-text";
@@ -12,10 +12,12 @@ import Cookies from 'universal-cookie';
 import axios from "axios";
 import {useHistory} from "react-router-dom";
 import _ from 'lodash';
+import {environment} from "../../../../../../apps/web-editor-client/src/environments/environment";
 
 /* eslint-disable-next-line */
 export interface EditorSideBarProps {
   path:string
+  innerHTML: []
 }
 
 export interface Modification {
@@ -33,10 +35,8 @@ export const EditorSideBar = (props: EditorSideBarProps) => {
  const cookies = new Cookies();
  const history = useHistory();
 
- const saveModifications = () => {
-   if(title == null) {
 
-   }
+ const saveModifications = () => {
    const genericModificationsNames = [
      'cssInjection',
      'textInjection',
@@ -66,8 +66,9 @@ export const EditorSideBar = (props: EditorSideBarProps) => {
      resizeModifications,
      genericModification
    };
+   const url = environment.backEndEndpoint + 'design-crud/addDesign';
 
-   axios.post('http://localhost:3333/api/design-crud/addDesign', payload)
+   axios.post(url, payload)
      .then(res => {
       history.push('/design-list')
      })
@@ -169,7 +170,7 @@ export const EditorSideBar = (props: EditorSideBarProps) => {
           <CssInjection path={props.path} addModification={addModification}/>
         </ListGroup.Item>
         <ListGroup.Item>
-          <HtmlInjection path={props.path} addModification={addModification}/>
+          <HtmlInjection path={props.path} innerHTML={props.innerHTML} addModification={addModification}/>
         </ListGroup.Item>
         <ListGroup.Item>
           <Resize path={props.path} addModification={addModification}/>

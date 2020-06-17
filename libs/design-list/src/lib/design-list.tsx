@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 
 import './design-list.scss';
 
-import SideNav from "./side-nav/side-nav";
-import ListPage from "./list-page/list-page";
+import {environment} from "../../../../apps/web-editor-client/src/environments/environment";
 import Modal from 'react-bootstrap/Modal'
 import {Button, Form, FormControl} from "react-bootstrap";
 import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
@@ -24,7 +23,7 @@ export const DesignList = (props: DesignListProps) => {
   const handleShow = () => setShow(true);
 
   let debouncedFn = null;
-
+  environment.backEndEndpoint
   const { path } = useRouteMatch();
   const history = useHistory();
 

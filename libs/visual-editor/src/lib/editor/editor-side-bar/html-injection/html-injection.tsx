@@ -8,6 +8,7 @@ import _ from 'lodash';
 /* eslint-disable-next-line */
 export interface HtmlInjectionProps {
   path: string,
+  innerHTML: [],
   addModification: (Modification) => void
 }
 
@@ -57,6 +58,7 @@ export const HtmlInjection = (props: HtmlInjectionProps) => {
 
       <TextareaModal
         show={show}
+        innerContent={props.innerHTML != null ? props.innerHTML.join('\n') : ''}
         header={'Insert html elements '}
         handleSubmit={handleCssCodeSubmit}
         handleChange={handleCodeChange}

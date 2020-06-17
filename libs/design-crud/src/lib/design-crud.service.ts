@@ -46,4 +46,9 @@ export class DesignCrudService {
     const result = await newDesign.save();
     return result.id;
   }
+
+  async deleteDesign(email: string, name:string) {
+    await this.design.deleteOne({email,  name});
+    return this.design.find({email});
+  }
 }

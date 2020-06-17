@@ -12,27 +12,25 @@ export interface EditorProps {
 
 export const Editor = (props: EditorProps) => {
   const [path, setPath] = useState(null);
-
+  const [innerHTML, setInnerHTML] = useState(null);
   const handleIframeTask = (e) => {
     if(e.data.action === 'click') {
       setPath(e.data.path);
+      setInnerHTML(e.data.innerHTML)
     }
     const iFrame = document.getElementsByClassName("myClassname")[0];
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    iFrame.contentWindow.postMessage({
-      "path" : e.data.path,
-      "action": e.data.action,
-      "style": {
-        border: '1px solid blue'
-      }
-    }, "*");
-    if (e.origin !== 'https://localhost:3000/') {
-      return;
+    if(iFrame != null) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      iFrame.contentWindow.postMessage({
+        "path" : e.data.path,
+        "action": e.data.action,
+        "style": {
+          border: '1px solid blue'
+        }
+      }, "*");
     }
-
   };
-
 
   window.addEventListener('message', handleIframeTask);
 
@@ -47,7 +45,7 @@ export const Editor = (props: EditorProps) => {
                 className="myClassname"
                 styles={{height: "25px"}}/>
       </div>
-      <EditorSideBar path={path}/>
+      <EditorSideBar path={path} innerHTML={innerHTML}/>
     </>
   );
 

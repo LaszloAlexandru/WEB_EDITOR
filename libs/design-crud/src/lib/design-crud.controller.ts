@@ -1,7 +1,7 @@
-import {Body, Controller, Get, Post, Put, Query, Res} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Post, Put, Query, Res} from '@nestjs/common';
 import { DesignCrudService } from './design-crud.service';
 import {GenericModificationModel, JavascriptInjectionModel, ResizeModificationModel} from "./design-crud.model";
-import {createReadStream} from "fs";
+import {environment} from "../../../../apps/web-editor-server/src/environments/environment";
 
 @Controller('design-crud')
 export class DesignCrudController {
@@ -12,11 +12,11 @@ export class DesignCrudController {
     return "It works";
   }
 
-
   @Get('/modification')
   async getModification(
     @Query('email') email: string,
-    @Query('name') name: string) {
+    @Query('name') name: string
+  ){
     return await this.designCrudService.getDesignById(email, name);
   }
 
@@ -24,25 +24,24 @@ export class DesignCrudController {
   async activateDesign(
     @Query('email') email: string,
     @Query('name') name:string
-  ) {
+  ){
     return this.designCrudService.activateDesign(email, name)
   }
 
   @Get('/getActiveModifications')
   async getModifications(
     @Query('email') email:string,
-    @Query('token') token:string) {
-    console.log(email, token);
+    @Query('token') token:string
+  ){
     const response =  await this.designCrudService.getActiveDesigns(email, token);
-    console.log(response);
     return response;
   }
 
   @Get('/getFile')
   async getFile(
     @Res() res
-  ) {
-    return res.download('apps/web-editor-server/src/assets/comunication.js');
+  ){
+    return res.download(environment.assetsPath);
   }
 
   @Post('addDesign')
@@ -53,15 +52,24 @@ export class DesignCrudController {
     @Body('active') active: boolean,
     @Body('jsModification') jsModification: [JavascriptInjectionModel],
     @Body('genericModification') genericModifications: [GenericModificationModel],
-    @Body('resizeModifications') resizeModifications: [ResizeModificationModel]){
+    @Body('resizeModifications') resizeModifications: [ResizeModificationModel]
+  ){
 
     return await this.designCrudService.addDesign(email, name, active, timestamp, jsModification, genericModifications, resizeModifications)
+  }
+
+  @Delete('addDesign')
+  async deleteDesign(
+    @Body('email') email: string,
+    @Body('name') name: string
+  ){
+    return this.designCrudService.deleteDesign(email, name);
   }
 
   @Get("getDesigns")
   async getDesigns(
     @Query('email') email: string
-  ) {
-    return await this.designCrudService.getDesigns(email);
+  ){
+    return this.designCrudService.getDesigns(email);
   }
 }

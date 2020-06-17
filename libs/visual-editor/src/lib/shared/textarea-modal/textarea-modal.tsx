@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './textarea-modal.scss';
 import {Button, Form, Modal} from "react-bootstrap";
@@ -10,10 +10,12 @@ export interface TextareaModalProps {
   handleClose: () => void;
   handleChange: (any) => void;
   handleSubmit: () => void;
+  innerContent?: string;
 }
 
 export const TextareaModal = (props: TextareaModalProps) => {
   const { show, header, handleClose, handleChange, handleSubmit}  = props;
+
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -22,7 +24,7 @@ export const TextareaModal = (props: TextareaModalProps) => {
       <Modal.Body>
         <Form>
           <Form.Group controlId="exampleForm.ControlTextarea1">
-            <Form.Control as="textarea" className='inject-javascript-textarea' onChange={handleChange}/>
+            <Form.Control as="textarea" className='inject-javascript-textarea' onChange={handleChange} defaultValue={props.innerContent}/>
           </Form.Group>
         </Form>
       </Modal.Body>

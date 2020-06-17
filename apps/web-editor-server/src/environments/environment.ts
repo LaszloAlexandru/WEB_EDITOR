@@ -1,3 +1,4 @@
 export const environment = {
-  production: false
+  production: false,
+  assetsPath: 'apps/web-editor-server/src/assets/comunication.js'
 };

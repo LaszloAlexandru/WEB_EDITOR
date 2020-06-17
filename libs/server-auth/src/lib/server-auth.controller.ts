@@ -13,7 +13,6 @@ export class ServerAuthController {
   @Get()
   getUser(@Body('email') id:string,
           @Body('password') password:string) {
-    console.log(password);
     return this.serverAuthService.getUserById(id);
 }
 
@@ -31,8 +30,7 @@ export class ServerAuthController {
 
       const user = await this.serverAuthService.getUserById(email);
       const userValidity = await this.serverAuthService.checkUserValidity(password, user);
-      console.log(userValidity);
-      console.log(user);
+
       if(userValidity) {
         return this.serverAuthService.login(user);
       }

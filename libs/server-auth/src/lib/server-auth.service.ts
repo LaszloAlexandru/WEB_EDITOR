@@ -36,7 +36,6 @@ export class ServerAuthService {
   }
 
   async login(user) {
-    console.log(user);
     if(user !== null) {
       const deconstructUser = {
         _id: user._id,

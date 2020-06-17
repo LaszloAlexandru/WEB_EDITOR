@@ -57,7 +57,6 @@ export const ChangeInnerText = (props: ChangeInnerTexttProps) => {
       <TextareaModal
         show={show}
         header={'Change inner text'}
-
         handleSubmit={handleJsCodeSubmit}
         handleChange={handleTextChange}
         handleClose={handleClose}

@@ -7,6 +7,7 @@ import SignupModal from "./signup-modal/signup-modal";
 import Cookies from 'universal-cookie';
 import {Route} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
+import {environment} from "../../../../apps/web-editor-client/src/environments/environment";
 
 /* eslint-disable-next-line */
 export interface LandingPageProps {}
@@ -26,7 +27,8 @@ export const LandingPage = (props: LandingPageProps) => {
     const bearerToken = cookies.get("bearerToken");
 
     if (bearerToken) {
-      await axios.post('http://localhost:3333/api/auth/verify', {bearerToken})
+      const url = environment.backEndEndpoint + 'auth/verify';
+      await axios.post(url, {bearerToken})
         .then(res => {
           history.push('/design-list')
         })
@@ -42,7 +44,8 @@ export const LandingPage = (props: LandingPageProps) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    axios.post('http://localhost:3333/api/auth', {name: userName, email, password})
+    const url = environment.backEndEndpoint + 'auth';
+    axios.post(url, {name: userName, email, password})
       .then(res => {
         setWasRegistered(res.data);
       })
@@ -70,7 +73,9 @@ export const LandingPage = (props: LandingPageProps) => {
 
   const handleLogin = (event: any) => {
     event.preventDefault();
-    axios.post('http://localhost:3333/api/auth/login', { email, password})
+    const url = environment.backEndEndpoint + 'auth/login';
+    console.log(url);
+    axios.post(url, { email, password})
       .then(res => {
         const bearerToken = res.data.bearerToken;
         cookies.set("email", email);

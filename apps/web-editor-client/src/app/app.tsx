@@ -10,6 +10,7 @@ import {LandingPage} from '@web-editor/landing-page';
 import axios from "axios";
 import Cookies from "universal-cookie";
 import {DesignList} from "@web-editor/design-list";
+import {environment} from "../environments/environment";
 
 export const App = () => {
   /*
@@ -25,7 +26,9 @@ export const App = () => {
     const bearerToken = cookies.get("bearerToken");
 
     if (bearerToken) {
-      await axios.post('http://localhost:3333/api/auth/verify', {bearerToken})
+      const url = environment.backEndEndpoint + 'auth/verify';
+      console.log(url);
+      await axios.post(url, {bearerToken})
         .then(res => {
           setCheckToken(true);
         })

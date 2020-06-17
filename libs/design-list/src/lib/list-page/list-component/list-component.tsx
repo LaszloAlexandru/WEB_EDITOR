@@ -5,6 +5,8 @@ import {Button, ButtonGroup, Col, ListGroup, Row} from "react-bootstrap";
 import {MdModeEdit, MdDeleteForever, MdPlayArrow} from 'react-icons/md';
 import axios from "axios";
 import Cookies from "universal-cookie";
+import {environment} from "../../../../../../apps/web-editor-client/src/environments/environment";
+
 /* eslint-disable-next-line */
 export interface ListComponentProps {
   filter:string;
@@ -16,10 +18,10 @@ export const ListComponent = (props: ListComponentProps) => {
   const [designList, setDesignList] = useState(null);
   const cookies = new Cookies();
 
-
   const getListData = async() => {
     const email = cookies.get("email");
-    const response = await axios.get('http://localhost:3333/api/design-crud/getDesigns?email=' + email)
+    const url = environment.backEndEndpoint + 'design-crud/getDesigns?email=' + email
+    const response = await axios.get(url)
       .then(res => {
         return res.data;
       })
@@ -32,12 +34,25 @@ export const ListComponent = (props: ListComponentProps) => {
     )
   }
 
+  const handleDelete = async (name: string) => {
+    const email = cookies.get("email");
+    const url = environment.backEndEndpoint + 'design-crud/addDesign';
+    const response = await axios.delete(url, {
+      data: {
+        email,
+        name
+      }
+    })
+      .then(res => {
+        return res.data;
+      })
+    setDesignList(response);
+  }
 
   const activateDesign = async (name: string) => {
     const email = cookies.get("email");
-    const url = "http://localhost:3333/api/design-crud/activate?email=" + email + "&name=" + name;
+    const url = environment.backEndEndpoint + "design-crud/activate?email=" + email + "&name=" + name;
     const encodedUrl = encodeURI(url);
-    console.log(encodedUrl);
     const response = await axios.put(encodedUrl)
       .then(res => {
         return res.data;
@@ -46,8 +61,6 @@ export const ListComponent = (props: ListComponentProps) => {
   };
 
   const getListItems = () => {
-    console.log(designList);
-
     return designList.map((design,index) => {
       const activate = design.active ? "Deactivate" : "Activate";
       if(props.filter && props.filter !== '' && !design.name.includes(props.filter))
@@ -75,7 +88,7 @@ export const ListComponent = (props: ListComponentProps) => {
                     <MdModeEdit/>
                   </span>
                 </Button>
-                <Button variant="primary" className='design-button'>
+                <Button variant="primary" className='design-button' onClick={(e) => handleDelete(design.name)}>
                   <span>Delete</span>
                   <span className='design-buttons-icons '>
                     <MdDeleteForever/>
