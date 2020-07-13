@@ -33,7 +33,14 @@ export class DesignCrudService {
     return this.design.find({email:email, active:true});
   }
 
-  async addDesign(email: string, name:string, active:boolean,timestamp:string, jsModifications: [JavascriptInjectionModel], genericModifications: [GenericModificationModel], resizeModifications: [ResizeModificationModel]) {
+  async addDesign(email: string,
+                  name:string,
+                  active:boolean,
+                  timestamp:string,
+                  jsModifications: [JavascriptInjectionModel],
+                  genericModifications: [GenericModificationModel],
+                  resizeModifications: [ResizeModificationModel]) {
+
     const newDesign = new this.design({
       email,
       name,

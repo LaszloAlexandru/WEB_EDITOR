@@ -1,14 +1,14 @@
 .iframe-container {
   display:inline-block;
   height: 100%;
-  min-width:85%;
+  min-width:80%;
   iframe {
     border:none;
   }
 }
 .editor-sidebar {
   display:inline-block;
-  width: 15%;
+  width: 20%;
   border-left: 1px solid #4b4950;
   .control-list{
     button {

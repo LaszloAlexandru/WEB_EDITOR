@@ -13,7 +13,7 @@ export interface JavascriptInjectionModel extends mongoose.Document {
 export const GenericModificationSchema = new mongoose.Schema({
   type: {type: String, required:true},
   selector: {type: String, required:true},
-  value: {type: String, required:true}
+  value: {type: String, required:false}
 });
 
 export interface GenericModificationModel extends mongoose.Document {

@@ -18,6 +18,7 @@ import {environment} from "../../../../../../apps/web-editor-client/src/environm
 export interface EditorSideBarProps {
   path:string
   innerHTML: []
+  innerText: string
 }
 
 export interface Modification {
@@ -46,9 +47,8 @@ export const EditorSideBar = (props: EditorSideBarProps) => {
    const standardisedModifications = modifications.map(modification => {
      return standardiseGeneralModification(modification);
    });
-
    const jsModification = standardisedModifications.filter(modification => modification.type === 'jsModification') || [];
-   const resizeModifications = standardisedModifications.filter(modification => modification.type === 'resizeModifications') || [];
+   const resizeModifications = standardisedModifications.filter(modification => modification.type === 'resize') || [];
    const genericModification = standardisedModifications.filter(modification => {
      return genericModificationsNames.includes(modification.type);
    }) || [];
@@ -66,17 +66,17 @@ export const EditorSideBar = (props: EditorSideBarProps) => {
      resizeModifications,
      genericModification
    };
-   const url = environment.backEndEndpoint + 'design-crud/addDesign';
 
+   const url = environment.backEndEndpoint + 'design-crud/addDesign';
    axios.post(url, payload)
      .then(res => {
       history.push('/design-list')
      })
- }
+ };
 
  const handleClose = () => {
    history.push('/design-list')
- }
+ };
 
   let debouncedFn = null;
 
@@ -117,41 +117,43 @@ export const EditorSideBar = (props: EditorSideBarProps) => {
       return (
         <ListGroup.Item key={index}>
           <div>
-            {modification.name}
+            Modification type: {_.startCase(modification.name)}
           </div>
           <div>
-            {modification.path}
+            Path: {modification.path}
           </div>
         </ListGroup.Item>)
     })
   };
 
+  const validateTitle = () => {
+    return title == null || title === '' ? true : false;
+  }
+
   const modificationList = getChangeListItems();
 
   return (
     <div className='editor-sidebar'>
-
       <div className='editor-buttons-container'>
-        <Button variant='primary' className='save-modifications-button' size="lg" onClick={saveModifications}>
-          Save changes
-        </Button>
-        <Button variant='secondary' className='close-editor' size="lg" onClick={handleClose} >
-          Close
-        </Button>
-      </div>
-
-      <ListGroup className='control-list'>
-        <ListGroup.Item>
-          <InputGroup>
+          <InputGroup className={"title-container"}>
             <InputGroup.Prepend>
               <InputGroup.Text>Title</InputGroup.Text>
             </InputGroup.Prepend>
             <Form>
               <FormControl onChange={handleTitleChange}/>
             </Form>
-
           </InputGroup>
-        </ListGroup.Item>
+        <div>
+          <Button variant='primary' className='save-modifications-button' size="lg" onClick={saveModifications} disabled={validateTitle()}>
+            Save changes
+          </Button>
+          <Button variant='secondary' className='close-editor' size="lg" onClick={handleClose} >
+            Close
+          </Button>
+        </div>
+      </div>
+
+      <ListGroup className='control-list'>
         <ListGroup.Item className='modifications-header'>
           <h1>
             Choose a modification
@@ -164,7 +166,7 @@ export const EditorSideBar = (props: EditorSideBarProps) => {
           <InjectJavascript path={props.path} addModification={addModification}/>
         </ListGroup.Item>
         <ListGroup.Item>
-          <ChangeInnerText path={props.path} addModification={addModification}/>
+          <ChangeInnerText path={props.path} addModification={addModification} innerText={props.innerText}/>
         </ListGroup.Item>
         <ListGroup.Item>
           <CssInjection path={props.path} addModification={addModification}/>

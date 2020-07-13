@@ -1,14 +1,17 @@
 import React from 'react';
 
 import './about-page.scss';
-import {Button, Card, ListGroup} from "react-bootstrap";
+import {Button, Card} from "react-bootstrap";
 import {environment} from "../../../../apps/web-editor-client/src/environments/environment";
-import axios from "axios";
+import Cookies from "universal-cookie";
 
 /* eslint-disable-next-line */
 export interface AboutPageProps {}
 
 export const AboutPage = (props: AboutPageProps) => {
+  const cookie = new Cookies();
+
+  const email = cookie.get('email');
 
   return (
     <div className='about-page-container'>
@@ -18,7 +21,7 @@ export const AboutPage = (props: AboutPageProps) => {
           <Card.Text>
             First step is to download the connection js and introduce it in the head of your website.
           </Card.Text>
-          <Button href= {environment.backEndEndpoint + "design-crud/getFile"} variant='primary' >
+          <Button href= {environment.backEndEndpoint + `design-crud/getFile?email=${email}`} variant='primary' >
             Download
           </Button>
         </Card.Body>

@@ -16,7 +16,6 @@ export const LandingPage = (props: LandingPageProps) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [userName, setUsername] = useState(null);
-  const [wasRegistered, setWasRegistered] = useState(null);
   const [emailAlreadyInUse, setEmailAlreadyInUse] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
 
@@ -32,22 +31,17 @@ export const LandingPage = (props: LandingPageProps) => {
         .then(res => {
           history.push('/design-list')
         })
-
     }
   };
 
   checkBearerToken();
-
-  if(wasRegistered) {
-    history.push("/login");
-  }
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     const url = environment.backEndEndpoint + 'auth';
     axios.post(url, {name: userName, email, password})
       .then(res => {
-        setWasRegistered(res.data);
+        history.push('/login');
       })
       .catch(err => {
         if(err.response.status === 409) {
@@ -74,7 +68,6 @@ export const LandingPage = (props: LandingPageProps) => {
   const handleLogin = (event: any) => {
     event.preventDefault();
     const url = environment.backEndEndpoint + 'auth/login';
-    console.log(url);
     axios.post(url, { email, password})
       .then(res => {
         const bearerToken = res.data.bearerToken;
@@ -99,7 +92,7 @@ export const LandingPage = (props: LandingPageProps) => {
             handleChangeEmail={handleChangeEmail}
             handleChangePassword={handleChangePassword}/>
         </Route>
-        <Route path='/sign-up'>
+        <Route path='/login/sign-up'>
           <SignupModal
             handleSubmit={handleSubmit}
             handleChangeEmail={handleChangeEmail}

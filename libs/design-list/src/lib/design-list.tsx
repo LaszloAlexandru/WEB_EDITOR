@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 
 import './design-list.scss';
 
-import {environment} from "../../../../apps/web-editor-client/src/environments/environment";
 import Modal from 'react-bootstrap/Modal'
 import {Button, Form, FormControl} from "react-bootstrap";
 import {Route, Switch, useHistory, useRouteMatch} from 'react-router-dom';
-import {VisualEditor, Editor} from "@web-editor/visual-editor";
+import {VisualEditor} from "@web-editor/visual-editor";
 import _ from 'lodash';
 import AppNav from "./app-nav/app-nav";
 import {AboutPage} from "@web-editor/about-page";
@@ -23,7 +22,6 @@ export const DesignList = (props: DesignListProps) => {
   const handleShow = () => setShow(true);
 
   let debouncedFn = null;
-  environment.backEndEndpoint
   const { path } = useRouteMatch();
   const history = useHistory();
 
@@ -52,8 +50,13 @@ export const DesignList = (props: DesignListProps) => {
 
   const handleCreate = () => {
     setShow(false);
+    setUrl(null);
     history.push(path + '/editor');
   };
+
+  const validateControl = () => {
+    return websiteUrl == null || websiteUrl === '' ? true : false;
+  }
 
   return (
     <div className='main-container'>
@@ -69,14 +72,14 @@ export const DesignList = (props: DesignListProps) => {
             </Modal.Header>
             <Modal.Body>
               <Form>
-                <FormControl type="text" placeholder="Enter url" className="mr-sm-2" onChange={handleUrlChange}/>
+                <FormControl type="text" placeholder="Enter url" className="mr-sm-2" onChange={handleUrlChange} isInvalid={validateControl()}/>
               </Form>
             </Modal.Body>
             <Modal.Footer style={{border:"none"}}>
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleCreate}>
+              <Button variant="primary" onClick={handleCreate} disabled = {validateControl()}>
                 Create
               </Button>
             </Modal.Footer>

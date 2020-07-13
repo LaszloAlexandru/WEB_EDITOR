@@ -8,6 +8,7 @@ import _ from 'lodash';
 export interface ChangeInnerTexttProps {
   path:string;
   addModification: (Modification) => void;
+  innerText:string;
 }
 
 export const ChangeInnerText = (props: ChangeInnerTexttProps) => {
@@ -20,7 +21,7 @@ export const ChangeInnerText = (props: ChangeInnerTexttProps) => {
     const modification = {
       name: "textInjection",
       path: props.path,
-      value:  innerText
+      value:  innerText || ''
     };
     props.addModification(modification);
     const iFrame = document.getElementsByClassName("myClassname")[0];
@@ -30,7 +31,7 @@ export const ChangeInnerText = (props: ChangeInnerTexttProps) => {
       "path" : props.path,
       "type": "inner-text-change",
       "action": "click",
-      "text": innerText
+      "text": innerText || ''
     }, "*");
     handleClose();
   };
@@ -56,6 +57,7 @@ export const ChangeInnerText = (props: ChangeInnerTexttProps) => {
 
       <TextareaModal
         show={show}
+        innerContent={props.innerText}
         header={'Change inner text'}
         handleSubmit={handleJsCodeSubmit}
         handleChange={handleTextChange}

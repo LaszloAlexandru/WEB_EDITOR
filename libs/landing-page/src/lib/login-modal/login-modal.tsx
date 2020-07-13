@@ -26,12 +26,12 @@ export const LoginModal = (props: LoginModalProps) => {
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" onChange={handleChangeEmail}/>
+          <Form.Control required type="email" placeholder="Enter email" onChange={handleChangeEmail}/>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" onChange={handleChangePassword}/>
+          <Form.Control required type="password" placeholder="Password" onChange={handleChangePassword}/>
         </Form.Group>
         {alert}
         <Button variant="primary" type="submit" className='sign-up-button'>
@@ -39,7 +39,7 @@ export const LoginModal = (props: LoginModalProps) => {
         </Button>
       </Form>
       <div>
-        Do not hava an account? <Link to={'/sign-up'}> Create one!</Link>
+        Do not hava an account? <Link to={'/login/sign-up'}> Create one!</Link>
       </div>
     </div>
 

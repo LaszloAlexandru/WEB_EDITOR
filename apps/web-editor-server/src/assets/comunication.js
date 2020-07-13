@@ -1,7 +1,7 @@
 var previousElement;
 var hoverClass = document.createElement('style');
 hoverClass.type = 'text/css';
-hoverClass.innerHTML = '.textHover { border: 2px solid red; }';
+hoverClass.innerHTML = '.textHover{ border: 2px solid red !important; } .selectClass{ border: 2px solid blue !important';
 document.getElementsByTagName('head')[0].appendChild(hoverClass);
 
 function getIndex(element, nodes) {
@@ -108,7 +108,7 @@ document.addEventListener("mouseover", function(e){
 
 document.addEventListener('mouseout', function(event) {
   if(event.target != null && event.target.className != null) {
-    event.target.className = event.target.className.split('textHover').join("");
+    event.target.className = event.target.className.split(' textHover').join('');
   }
 });
 
@@ -156,42 +156,41 @@ function htmlToElements(html) {
 }
 
 const handleIframeTask = (e) => {
-  let element = getElementByXpath(e.data.path);
-  if(e.data.action === 'mouseover' && element != null) {
-    element.className = element.className + " " + 'textHover';
-  }
-  if(e.data.action === "click"){
-    removeSelector(element);
-    for(let key  in e.data.style) {
-      element.setAttribute('style', key + ": " + e.data.style[key]);
+  if(e.origin + "/" !== document.URL){
+    let element = getElementByXpath(e.data.path);
+    if(e.data.action === 'mouseover' && element != null) {
+      element.className = element.className + " " + 'textHover';
+    }
+    if(e.data.action === "click"){
+      removeSelector(element);
+      element.className = element.className + ' selectClass';
+    }
+    switch (e.data.type) {
+      case "background-change":
+        handleBackgroundChange(element, e.data.style);
+        break;
+      case "javascript-injection":
+        handleJavascriptInjection(e.data.code);
+        break;
+      case "inner-text-change":
+        handleChangeText(element, e.data.text);
+        break;
+      case "css":
+        handleCssInjection(element, e.data.css);
+        break;
+      case "html":
+        handleHtmlInjection(element, e.data.html);
+        break;
+      case "resize":
+        handleResize(element, e.data.resize.width, e.data.resize.height);
+        break;
     }
   }
-  switch (e.data.type) {
-    case "background-change":
-      handleBackgroundChange(element, e.data.style);
-      break;
-    case "javascript-injection":
-      handleJavascriptInjection(e.data.code);
-      break;
-    case "inner-text-change":
-      handleChangeText(element, e.data.text);
-      break;
-    case "css":
-      handleCssInjection(element, e.data.css);
-      break;
-    case "html":
-      handleHtmlInjection(element, e.data.html);
-      break;
-    case "resize":
-      handleResize(element, e.data.resize.width, e.data.resize.height);
-      break;
-  }
-
 };
 
 const removeSelector = (element) => {
-  if(previousElement != null && previousElement.style.border === "1px solid blue") {
-    previousElement.style.border = 'none';
+  if(previousElement != null) {
+    previousElement.className = previousElement.className.split(' selectClass',).join('')
   }
   previousElement = element;
 };
@@ -237,12 +236,11 @@ const applyModifications = (modifications) => {
 window.addEventListener('message', handleIframeTask);
 
 const Http = new XMLHttpRequest();
-const url='http://localhost:3333/api/design-crud/getActiveModifications?email=aksel.andrey@gmail.com&token=something';
-
 Http.onreadystatechange = function() {
   if (Http.readyState === 4) {
-    applyModifications(JSON.parse(Http.response));
-  }
+    if(Http.response != null)
+      applyModifications(JSON.parse(Http.response));
+  } else {}
 };
 Http.open("get", url);
 Http.send();

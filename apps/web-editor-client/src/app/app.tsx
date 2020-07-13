@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Route, useHistory , Redirect// for later
 } from 'react-router-dom';
-import {VisualEditor} from "@web-editor/visual-editor"
 import {LandingPage} from '@web-editor/landing-page';
 import axios from "axios";
 import Cookies from "universal-cookie";
@@ -13,11 +12,7 @@ import {DesignList} from "@web-editor/design-list";
 import {environment} from "../environments/environment";
 
 export const App = () => {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./app.scss file.
-   */
+
   const [checkToken, setCheckToken] = useState(null);
   const cookies = new Cookies();
   const history = useHistory();
@@ -27,7 +22,6 @@ export const App = () => {
 
     if (bearerToken) {
       const url = environment.backEndEndpoint + 'auth/verify';
-      console.log(url);
       await axios.post(url, {bearerToken})
         .then(res => {
           setCheckToken(true);

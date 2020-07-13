@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import './list-component.scss';
 import {Button, ButtonGroup, Col, ListGroup, Row} from "react-bootstrap";
-import {MdModeEdit, MdDeleteForever, MdPlayArrow} from 'react-icons/md';
+import {MdDeleteForever, MdPlayArrow} from 'react-icons/md';
 import axios from "axios";
 import Cookies from "universal-cookie";
 import {environment} from "../../../../../../apps/web-editor-client/src/environments/environment";
@@ -24,7 +24,7 @@ export const ListComponent = (props: ListComponentProps) => {
     const response = await axios.get(url)
       .then(res => {
         return res.data;
-      })
+      });
     setDesignList(response);
   };
   if(designList == null){
@@ -45,9 +45,9 @@ export const ListComponent = (props: ListComponentProps) => {
     })
       .then(res => {
         return res.data;
-      })
+      });
     setDesignList(response);
-  }
+  };
 
   const activateDesign = async (name: string) => {
     const email = cookies.get("email");
@@ -80,12 +80,6 @@ export const ListComponent = (props: ListComponentProps) => {
                   <span>{activate}</span>
                   <span className='design-buttons-icons'>
                     <MdPlayArrow/>
-                  </span>
-                </Button>
-                <Button variant="primary" className='design-button'>
-                  <span>Edit</span>
-                  <span className='design-buttons-icons'>
-                    <MdModeEdit/>
                   </span>
                 </Button>
                 <Button variant="primary" className='design-button' onClick={(e) => handleDelete(design.name)}>

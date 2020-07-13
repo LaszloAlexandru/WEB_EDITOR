@@ -13,10 +13,12 @@ export interface EditorProps {
 export const Editor = (props: EditorProps) => {
   const [path, setPath] = useState(null);
   const [innerHTML, setInnerHTML] = useState(null);
+  const [innerText, setInnerText] = useState(null)
   const handleIframeTask = (e) => {
     if(e.data.action === 'click') {
       setPath(e.data.path);
       setInnerHTML(e.data.innerHTML)
+      setInnerText(e.data.innerText);
     }
     const iFrame = document.getElementsByClassName("myClassname")[0];
     if(iFrame != null) {
@@ -45,7 +47,7 @@ export const Editor = (props: EditorProps) => {
                 className="myClassname"
                 styles={{height: "25px"}}/>
       </div>
-      <EditorSideBar path={path} innerHTML={innerHTML}/>
+      <EditorSideBar path={path} innerHTML={innerHTML} innerText={innerText}/>
     </>
   );
 

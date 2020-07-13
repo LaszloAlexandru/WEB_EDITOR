@@ -22,7 +22,7 @@ export const HtmlInjection = (props: HtmlInjectionProps) => {
     const modification = {
       name: "htmlInjection",
       path: props.path,
-      value:  html
+      value:  html || ''
     };
     props.addModification(modification);
     const iFrame = document.getElementsByClassName("myClassname")[0];
@@ -32,7 +32,7 @@ export const HtmlInjection = (props: HtmlInjectionProps) => {
       "path" : props.path,
       "type": "html",
       "action": "click",
-      "html": html
+      "html": html || ''
     }, "*");
     handleClose();
   };

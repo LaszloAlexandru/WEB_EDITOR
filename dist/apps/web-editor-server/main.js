@@ -299,7 +299,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nestjs_common__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _design_crud_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./design-crud.service */ "./libs/design-crud/src/lib/design-crud.service.ts");
 /* harmony import */ var _apps_web_editor_server_src_environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../apps/web-editor-server/src/environments/environment */ "./apps/web-editor-server/src/environments/environment.ts");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! fs */ "fs");
+/* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_4__);
 var _a;
+
 
 
 
@@ -327,9 +330,15 @@ let DesignCrudController = class DesignCrudController {
             return response;
         });
     }
-    getFile(res) {
+    getFile(email, res) {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
-            return res.download(_apps_web_editor_server_src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].assetsPath);
+            const defaultJs = fs__WEBPACK_IMPORTED_MODULE_4__["readFileSync"](_apps_web_editor_server_src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].assetsPath);
+            const finishedJs = _apps_web_editor_server_src_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].production
+                ? `const url='http://3.84.66.174:3333/api/design-crud/getActiveModifications?email=${email}&token=something';\n` + defaultJs
+                : `const url='http://localhost:3333/api/design-crud/getActiveModifications?email=${email}&token=something';\n` + defaultJs;
+            res.setHeader('Content-type', "application/octet-stream");
+            res.setHeader('Content-disposition', 'attachment; filename=communication.js');
+            res.send(finishedJs);
         });
     }
     postData(email, name, timestamp, active, jsModification, genericModifications, resizeModifications) {
@@ -380,9 +389,10 @@ Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 ], DesignCrudController.prototype, "getModifications", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Get"])('/getFile'),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Res"])()),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(0, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Query"])('email')),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__param"])(1, Object(_nestjs_common__WEBPACK_IMPORTED_MODULE_1__["Res"])()),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:type", Function),
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [Object]),
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:paramtypes", [String, Object]),
     Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"])("design:returntype", Promise)
 ], DesignCrudController.prototype, "getFile", null);
 Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
@@ -445,7 +455,7 @@ const JavascriptInjectionSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Sch
 const GenericModificationSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
     type: { type: String, required: true },
     selector: { type: String, required: true },
-    value: { type: String, required: true }
+    value: { type: String, required: false }
 });
 const ResizeModificationSchema = new mongoose__WEBPACK_IMPORTED_MODULE_0__["Schema"]({
     type: { type: String, required: true },
@@ -942,6 +952,17 @@ module.exports = require("@nestjs/mongoose");
 /***/ (function(module, exports) {
 
 module.exports = require("bcrypt");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("fs");
 
 /***/ }),
 

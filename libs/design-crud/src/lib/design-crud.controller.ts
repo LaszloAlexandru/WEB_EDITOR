@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, Post, Put, Query, Res} from '@nestjs/comm
 import { DesignCrudService } from './design-crud.service';
 import {GenericModificationModel, JavascriptInjectionModel, ResizeModificationModel} from "./design-crud.model";
 import {environment} from "../../../../apps/web-editor-server/src/environments/environment";
-
+import * as fs from "fs";
 @Controller('design-crud')
 export class DesignCrudController {
   constructor(private designCrudService: DesignCrudService) {}
@@ -39,9 +39,18 @@ export class DesignCrudController {
 
   @Get('/getFile')
   async getFile(
+    @Query('email') email: string,
     @Res() res
   ){
-    return res.download(environment.assetsPath);
+    const defaultJs = fs.readFileSync(environment.assetsPath);
+
+    const finishedJs = environment.production
+      ? `const url='http://3.84.66.174:3333/api/design-crud/getActiveModifications?email=${email}&token=something';\n` + defaultJs
+      : `const url='http://localhost:3333/api/design-crud/getActiveModifications?email=${email}&token=something';\n` + defaultJs;
+
+    res.setHeader('Content-type', "application/octet-stream");
+    res.setHeader('Content-disposition', 'attachment; filename=communication.js');
+    res.send(finishedJs);
   }
 
   @Post('addDesign')
@@ -54,7 +63,6 @@ export class DesignCrudController {
     @Body('genericModification') genericModifications: [GenericModificationModel],
     @Body('resizeModifications') resizeModifications: [ResizeModificationModel]
   ){
-
     return await this.designCrudService.addDesign(email, name, active, timestamp, jsModification, genericModifications, resizeModifications)
   }
 

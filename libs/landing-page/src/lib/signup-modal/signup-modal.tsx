@@ -23,11 +23,11 @@ export const SignupModal = (props: SignupModalProps) => {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={(e) => handleSubmit(e)}>
 
         <Form.Group controlId="forBasicUserName">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="name" placeholder="Enter username" onChange={handleChangeUsername} />
+          <Form.Control required type="name" placeholder="Enter username" onChange={handleChangeUsername} />
         </Form.Group>
 
         <Form.Group controlId="formBasicEmail">
@@ -38,7 +38,7 @@ export const SignupModal = (props: SignupModalProps) => {
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" onChange={handleChangePassword}/>
+          <Form.Control type="password" placeholder="Password" onChange={handleChangePassword} required/>
         </Form.Group>
 
         <Button variant="primary" type="submit" className='sign-up-button'>
@@ -46,7 +46,7 @@ export const SignupModal = (props: SignupModalProps) => {
         </Button>
       </Form>
       <div>
-        Already have an account? <Link to={'/'}> Log in!</Link>
+        Already have an account? <Link to={'/login'}> Log in!</Link>
       </div>
     </div>
   );

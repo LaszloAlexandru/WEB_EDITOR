@@ -19,7 +19,7 @@ export const Resize = (props: ResizeProps) => {
 
   const handleSubmit = () => {
     const modification = {
-      name: "Resize",
+      name: "resize",
       path: props.path,
       value:  {
         width: width,
@@ -32,7 +32,7 @@ export const Resize = (props: ResizeProps) => {
     // @ts-ignore
     iFrame.contentWindow.postMessage({
       "path" : props.path,
-      "type": "resizeModification",
+      "type": "resize",
       "resize": {
         width,
         height
