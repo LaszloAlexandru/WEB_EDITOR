@@ -38,7 +38,7 @@
     "bcrypt": "^4.0.1",
     "bootstrap": "^4.4.1",
     "document-register-element": "1.13.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mongoose": "^5.9.18",
     "react": "16.12.0",
     "react-bootstrap": "^1.0.0",
